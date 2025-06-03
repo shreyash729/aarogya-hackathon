@@ -37,8 +37,7 @@ audio_data = []
 stream = None
 
 # Load dataset for dropdown options (Risk Prediction)
-df = pd.read_csv('./../Datasets/hospital_readmissions.csv')
-AGE_BRACKETS = sorted(df['age'].dropna().unique().tolist())
+AGE_BRACKETS = ['[40-50)', '[50-60)', '[60-70)', '[70-80)', '[80-90)', '[90-100)']
 DIAGNOSES = ['Circulatory', 'Respiratory', 'Diabetes', 'Digestive', 'Injury', 'Musculoskeletal']
 age_weights = {'[40-50)': 1, '[50-60)': 2, '[60-70)': 3, '[70-80)': 4, '[80-90)': 5, '[90-100)': 6}
 diagnosis_weight = {'Circulatory': 2, 'Respiratory': 1.7, 'Diabetes': 1, 'Digestive': 0.8, 'Injury': 0.5, 'Musculoskeletal': 0.7}
