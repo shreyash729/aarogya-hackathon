@@ -1,11 +1,9 @@
 #import eventlet
 #eventlet.monkey_patch()
 from flask import Flask, Blueprint, render_template, request
-from flask_socketio import SocketIO
 import os
 import json
 #import pyaudio
-from datetime import datetime
 import pickle
 import pandas as pd
 import plotly.express as px
