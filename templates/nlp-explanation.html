@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NLP Feature Explanation - Aarogya</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/6c9e60223b.js" crossorigin="anonymous"></script>
+    <link rel="icon" href="https://png.pngtree.com/png-vector/20230531/ourmid/pngtree-young-doctor-drawing-coloring-pages-for-kids-vector-png-image_6785610.png" type="image/gif">
+
+</head>
+<body class="bg-gray-100">
+    <nav class="bg-white shadow animate-fadeIn relative z-10">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+        <a href = "/"><h1 class="text-2xl font-bold text-primary">Aarogya</h1></a>
+        <a href="/team" class="text-lg font-semibold text-primary">Team Debuggers</a>
+        </div>
+    </nav>
+    <div class="max-w-4xl mx-auto p-6 mt-10 bg-white rounded-lg shadow-lg">
+        <h1 class="text-3xl font-bold text-blue-600 mb-4">Why Our NLP Feature is Demonstrated Locally</h1>
+        <p class="text-gray-700 mb-4">
+            At Aarogya, our Automated Clinical Documentation feature leverages advanced Natural Language Processing (NLP) to convert spoken clinical notes into text using the Vosk speech-to-text model. This innovative functionality streamlines healthcare workflows by enabling hands-free note-taking.
+        </p>
+        <p class="text-gray-700 mb-4">
+            However, due to technical constraints in our deployment environment, we are showcasing this feature locally rather than in our live demo at <a href="https://aarogya-hackathon.onrender.com" class="text-blue-600 underline">aarogya-hackathon.onrender.com</a>. Below, we explain the reasoning and invite you to view our local demonstration.
+        </p>
+        <h2 class="text-2xl font-semibold text-blue-600 mb-2">Technical Explanation</h2>
+        <ul class="list-disc list-inside text-gray-700 mb-4">
+            <li><strong>Dependency on PyAudio:</strong> The Vosk model requires PyAudio, a Python library for audio processing, which depends on the PortAudio C library.</li>
+            <li><strong>Deployment Limitation:</strong> Our hosting platform, Render’s free tier, does not support installing system-level libraries like PortAudio, preventing PyAudio from being installed in the live environment.</li>
+            <li><strong>Workaround:</strong> In the live demo, we’ve implemented a text input interface for clinical notes to simulate the NLP feature’s output. This allows us to demonstrate the app’s functionality while adhering to platform constraints.</li>
+        </ul>
+        <h2 class="text-2xl font-semibold text-blue-600 mb-2">Local Demonstration</h2>
+        <p class="text-gray-700 mb-4">
+            We’ve recorded a video showcasing the full NLP feature running locally, where PyAudio and Vosk are installed. The demo illustrates real-time speech-to-text conversion for clinical notes, highlighting the feature’s potential in a healthcare setting.
+        </p>
+        <p class="text-gray-700 mb-4">
+            Please watch our <a href="https://your-video-link.com" class="text-blue-600 underline">demo video</a> (replace with actual link after uploading) to see the Automated Clinical Documentation feature in action.
+        </p>
+        <h2 class="text-2xl font-semibold text-blue-600 mb-2">Explore Our Live Demo</h2>
+        <p class="text-gray-700 mb-4">
+            While the NLP feature is demoed locally, our live app includes:
+        </p>
+        <ul class="list-disc list-inside text-gray-700 mb-4">
+            <li><a href="/symptom_checker" class="text-blue-600 underline">Symptom Checker</a> powered by Google Gemini AI.</li>
+            <li><a href="/predict_risk" class="text-blue-600 underline">Predictive Patient Risk Models</a> using machine learning.</li>
+            <li><a href="/notes" class="text-blue-600 underline">Text-based Clinical Notes</a> simulating NLP output.</li>
+            <li><a href="/team" class="text-blue-600 underline">Team Page</a> and <a href="/documentation1" class="text-blue-600 underline">Documentation</a>.</li>
+        </ul>
+        <a href="/" class="inline-block bg-blue-600 text-white font-semibold py-2 px-4 rounded hover:bg-blue-700">Return to Home</a>
+    </div>
+</body>
+</html>

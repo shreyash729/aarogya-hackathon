@@ -4,15 +4,15 @@ from flask import Flask, Blueprint, render_template, request, session, jsonify, 
 from flask_socketio import SocketIO
 import os
 import json
-import pyaudio
+#import pyaudio
 import numpy
 from datetime import datetime
 import pickle
 import pandas as pd
 import plotly.express as px
 import plotly.io as pio
-import vosk
-import webrtcvad
+#import vosk
+#import webrtcvad
 import pdfkit
 import google.generativeai as genai
 import re
@@ -32,13 +32,12 @@ with open('model/readmission_model.pkl', 'rb') as f:
 # Vosk model configuration
 VOSK_MODEL_PATH = "./model/vosk-model-small-hi-0.22"
 assert os.path.exists(VOSK_MODEL_PATH), "❌ Vosk model path is missing!"
-vosk_model = vosk.Model(VOSK_MODEL_PATH)
+"""vosk_model = vosk.Model(VOSK_MODEL_PATH)
 recognizer = vosk.KaldiRecognizer(vosk_model, 16000)
 vad = webrtcvad.Vad()
-vad.set_mode(2)
+vad.set_mode(2)"""
 
 genai.configure(api_key="AIzaSyDdZOGDWMHTzUcvHgHXMCzqv2N97s4-kJE")  # Replace with environment variable in production
-xAi_api = "xai-dB0fAiboIHnk9iSV6Yd9bbAoan1l60BLyxo2TWhey3lEZY84pWySMR4Y99kq0Oszq7xfhWKYOTVSQa3z"
 audio_data = []
 stream = None
 
@@ -51,7 +50,6 @@ diagnosis_weight = {'Circulatory': 2, 'Respiratory': 1.7, 'Diabetes': 1, 'Digest
 
 # ------------------------- Blueprints -------------------------
 risk_bp = Blueprint('risk', __name__, url_prefix='/risk')
-notes_bp = Blueprint('notes', __name__, url_prefix='/notes')
 symptom_bp = Blueprint('symptomchecker', __name__, url_prefix='/symptomchecker')
 # ------------------------- Homepage -------------------------
 @app.route('/')
@@ -75,7 +73,9 @@ def documentation3():
 def team():
     return render_template('team.html')
 
-
+@app.route('/nlp-explanation')
+def nlp_explanation():
+    return render_template('nlp-explanation.html')
 
 # ------------------------- AI Symptom Checker -------------------------
 SYMPTOM_TO_SPECIALTY = {
@@ -301,177 +301,9 @@ def predict():
 
 # ------------------------- Automated Clinical Notes Routes -------------------------
 
-@notes_bp.route('/', methods=['GET'])
-def notes():
-    return render_template('notes.html')
-
-
-def generate_medical_notes(transcript):
-    today = datetime.today().date().isoformat()
-    model = genai.GenerativeModel("gemini-2.0-flash")
-    prompt = f"""
-    Based on the following doctor-patient conversation, generate a JSON output with this format (tip: Prescribe medicines and give diagonosis by your own intelligence by understanding conversation):
-    {{
-      "patient_info": {{
-        "age": "value_or_null",
-        "name": "value_or_null",
-        "Dateofvisit": "{today}"
-      }},
-      "ClinicalNotes": {{
-        "ChiefComplaint": "value_or_null",
-        "HistoryofPresentIllness": "value_or_null",
-        "Diagnosis": "value_or_null",
-        "Medicines": [
-          {{
-            "name": "value_or_null",
-            "dosage": "value_or_null",
-            "frequency": "value_or_null",
-            "duration": "value_or_null",
-            "reason": "value_or_null"
-          }}
-        ]
-      }}
-    }}
-    Conversation: {transcript}
-    """
-    try:
-        response = model.generate_content(prompt)
-        if response and response.text:
-            print(f"📝 Raw AI response: {response.text}")  # Log raw response
-            cleaned_text = re.sub(r'^```json\s*|\s*```$', '', response.text, flags=re.MULTILINE).strip()
-            print(f"📝 Cleaned AI response: {cleaned_text}")  # Log cleaned response
-            try:
-                return json.loads(cleaned_text)
-            except json.JSONDecodeError as e:
-                print(f"❌ JSON Decode Error: {e}, Response: {cleaned_text}")
-                return {"error": f"Invalid JSON response from AI: {cleaned_text}"}
-        return {"error": "AI response unavailable"}
-    except Exception as e:
-        print(f"❌ Error generating medical notes: {e}")
-        return {"error": f"Error generating notes: {e}"}
-    
-@socketio.on('start_Recording')
-def handle_start_call():
-    global stream
-    if stream is None:
-        print("🎤 Transcription started...")
-        stream = pyaudio.PyAudio().open(
-            format=pyaudio.paInt16,
-            channels=1,
-            rate=16000,
-            input=True,
-            frames_per_buffer=8000
-        )
-        socketio.start_background_task(target=convo_detection)
-
-def is_speech(chunk):
-    try:
-        return vad.is_speech(chunk, sample_rate=16000)
-    except:
-        return True
-
-def convo_detection():
-    global stream
-    try:
-        while stream is not None:
-            data = stream.read(2000, exception_on_overflow=False)
-            if not data or not is_speech(data):
-                continue
-            audio_data.append(data)
-            if recognizer.AcceptWaveform(data):
-                result = json.loads(recognizer.Result())
-                text = result.get("text", "")
-                if text:
-                    print(f"📝 Recognized: {text}")
-                    socketio.emit('transcription_update', {'text': text})
-            eventlet.sleep(0.001)
-    except Exception as e:
-        print(f"❌ Error in voice detection: {e}")
-
-@socketio.on('stop_Recording')
-def handle_stop_call():
-    global stream, audio_data
-    if stream:
-        stream.stop_stream()
-        stream.close()
-        stream = None
-    socketio.emit('main_task_initialised')
-    print("🛑 Transcription stopped.")
-    final_transcript = []
-    for data in audio_data:
-        if recognizer.AcceptWaveform(data):
-            result = json.loads(recognizer.Result())
-            text = result.get("text", "").strip()
-            if text:
-                final_transcript.append(text)
-    transcript = " ".join(final_transcript)
-    audio_data = []
-    print(f"📋 Final transcript: {transcript}")
-    if not transcript.strip():
-        print("⚠️ Empty transcript. Skipping AI processing.")
-        socketio.emit('transcription_error', {'transcript': "", 'notes': "No valid transcription."})
-        return
-    structured_notes = generate_medical_notes(transcript)
-    socketio.emit('transcription_complete', structured_notes)
-
-@notes_bp.route('/display_result', methods=['POST', 'GET'])
-def display_result():
-    if request.method == 'POST':
-        data = request.get_json()
-        if not data:
-            return jsonify({'error': 'No data provided'}), 400
-        session['result'] = data
-        session.modified = True
-        return jsonify({'success': True})
-    else:  # GET
-        result = session.get('result', {})
-        return render_template('notes_result.html', result=result)
-    
-
-    
-@notes_bp.route('/save_patient_info', methods=['POST'])
-def save_patient_info():
-    try:
-        data = request.get_json()
-        patient_info = data.get('patient_info', {})
-        if not patient_info:
-            return jsonify({'success': False, 'error': 'No patient info provided'}), 400
-        session['result'] = session.get('result', {})
-        session['result']['patient_info'] = {
-            'name': patient_info.get('name', None),
-            'age': patient_info.get('age', None),
-            'Dateofvisit': patient_info.get('Dateofvisit', None)
-        }
-        session.modified = True
-        return jsonify({'success': True, 'patient_info': session['result']['patient_info']})
-    except Exception as e:
-        print(f"❌ Error saving patient info: {e}")
-        return jsonify({'success': False, 'error': str(e)}), 500
-
-@notes_bp.route('/save_clinical_notes', methods=['POST'])
-def save_clinical_notes():
-    try:
-        data = request.get_json()
-        clinical_notes = data.get('ClinicalNotes', {})
-        if not clinical_notes:
-            return jsonify({'success': False, 'error': 'No clinical notes provided'}), 400
-        session['result'] = session.get('result', {})
-        session['result']['ClinicalNotes'] = {
-            'ChiefComplaint': clinical_notes.get('ChiefComplaint', None),
-            'HistoryofPresentIllness': clinical_notes.get('HistoryofPresentIllness', None),
-            'Diagnosis': clinical_notes.get('Diagnosis', None),
-            'Medicines': clinical_notes.get('Medicines', None)
-        }
-        session.modified = True
-        return jsonify({'success': True, 'ClinicalNotes': session['result']['ClinicalNotes']})
-    except Exception as e:
-        print(f"❌ Error saving clinical notes: {e}")
-        return jsonify({'success': False, 'error': str(e)}), 500
-
 
 # Register Blueprints
 app.register_blueprint(risk_bp)
-app.register_blueprint(notes_bp)
 app.register_blueprint(symptom_bp)
 
 if __name__ == '__main__':
