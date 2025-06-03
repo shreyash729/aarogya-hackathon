@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Symptom Checker Documentation</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        h1 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        h2 {
+            font-size: 1.8em;
+            margin-top: 20px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
+        }
+        p {
+            margin: 10px 0;
+        }
+        ul {
+            list-style-type: disc;
+            margin: 10px 0 10px 20px;
+        }
+        ul li {
+            margin-bottom: 8px;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        .highlight {
+            background-color: #e8f4f8;
+            padding: 10px;
+            border-left: 4px solid #3498db;
+            border-radius: 4px;
+        }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 0.9em;
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href = "/symptomchecker"><h1>AI Symptom Checker Documentation</h1></a>
+        <div class="section">
+            <h2>Overview</h2>
+            <p>The AI Symptom Checker is a virtual assistant designed to analyze user-reported symptoms, provide triage recommendations, and suggest appropriate medical specialists. It leverages AI to deliver preliminary health assessments, helping users decide whether to seek immediate care or monitor symptoms.</p>
+        </div>
+        <div class="section">
+            <h2>Problem Statement</h2>
+            <p>Build a virtual assistant for symptom analysis, triage, and doctor recommendations to enhance accessibility to preliminary healthcare advice.</p>
+        </div>
+        <div class="section">
+            <h2>Tech Stack</h2>
+            <ul>
+                <li><strong>Backend:</strong> Python, Flask, Flask-SocketIO</li>
+                <li><strong>AI Model:</strong> Google Gemini AI (gemini-2.5-flash-preview) for symptom analysis</li>
+                <li><strong>Frontend:</strong> HTML, CSS, JavaScript, Jinja2 templates</li>
+                <li><strong>Libraries:</strong> google-generativeai for AI integration, JSON for response parsing</li>
+                <li><strong>Deployment:</strong> Local server (potential for cloud deployment)</li>
+            </ul>
+        </div>
+        <div class="section">
+            <h2>Feasibility</h2>
+            <div class="highlight">
+                <ul>
+                    <li><strong>Scalability:</strong> The Flask backend and Gemini AI integration allow for scalable symptom analysis, with potential cloud deployment for handling large user bases.</li>
+                    <li><strong>Accuracy:</strong> Gemini AI provides robust natural language processing, enhanced by fallback rule-based logic for reliability.</li>
+                    <li><strong>User Accessibility:</strong> Location-based doctor recommendations (using latitude/longitude) improve usability, with a simple web interface accessible on multiple devices.</li>
+                    <li><strong>Cost-Effectiveness:</strong> Leverages existing AI APIs, reducing development costs compared to building custom models.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="section">
+            <h2>Implementation Details</h2>
+            <p>The app accepts user-input symptoms via a web form, optionally including location data. The Gemini AI model processes symptoms to generate a JSON response with triage levels (Urgent, Moderate, Mild), doctor recommendations, and analysis. Fallback logic ensures functionality if AI fails. The frontend renders results dynamically using Jinja2 templates.</p>
+        </div>
+        <div class="section">
+            <h2>Future Enhancements</h2>
+            <ul>
+                <li>Integrate multilingual support for broader accessibility.</li>
+                <li>Add a chatbot interface for conversational symptom input.</li>
+                <li>Enhance location-based recommendations with real-time hospital data APIs.</li>
+                <li>Implement user authentication for personalized health tracking.</li>
+            </ul>
+        </div>
+        <footer>
+            <p>Developed as part of the Healthcare Prototype for Symptom Analysis, Triage, and Doctor Recommendations</p>
+        </footer>
+    </div>
+</body>
+</html>

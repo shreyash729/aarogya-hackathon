@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automated Clinical Notes</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/6c9e60223b.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+
+{% block content %}
+    <div class="container mx-auto px-4 py-8 max-w-3xl">
+        <h2 class="text-3xl font-bold text-gray-800 mb-4">Automated Clinical Notes</h2>
+        <div class="flex space-x-2 mb-6">
+            <button id="startBtn" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Start Recording <i class="fa-solid fa-microphone fa-beat-fade" style="color: #f20202; display: none;" id = "mic_icon"></i></button>
+            <button id="stopBtn" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600" disabled>Stop Recording</button>
+        </div>
+        <div class="bg-white shadow-md rounded-lg p-6 mb-6">
+            <h3 class="text-xl font-semibold text-gray-700 mb-2">Live Transcription:  <i class="fa-regular fa-circle-stop fa-beat-fade fa-lg" style="color: #63E6BE; display: none;" id="live_icon"></i></h3>
+            <p id="transcription" class="text-gray-800 min-h-[100px] border border-gray-300 p-2 rounded"></p>
+        </div>
+        <div class="bg-white shadow-md rounded-lg p-6 mb-6">
+            <h3 class="text-xl font-semibold text-gray-700 mb-2">Clinical Notes:</h3>
+            <pre id="clinicalNotes" class="text-gray-800 min-h-[100px] border border-gray-300 p-2 rounded"></pre>
+        </div>
+        <a href = "/"> <button class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Home</button></a>
+    </div>
+    <script>
+        const socket = io();
+        const startBtn = document.getElementById('startBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const transcription = document.getElementById('transcription');
+        const clinicalNotes = document.getElementById('clinicalNotes');
+        const mic_icon = document.getElementById('mic_icon');
+        const live_icon = document.getElementById('live_icon');
+        startBtn.addEventListener('click', () => {
+            socket.emit('start_Recording');
+            mic_icon.style.display = 'inline-block';
+            live_icon.style.display = 'inline-block';
+            startBtn.disabled = true;
+            stopBtn.disabled = false;
+            transcription.textContent = '';
+            clinicalNotes.textContent = '';
+        });
+
+        stopBtn.addEventListener('click', () => {
+            socket.emit('stop_Recording');
+            startBtn.disabled = false;
+            stopBtn.disabled = true;
+            mic_icon.style.display = 'none';
+            live_icon.style.display = 'none';
+            $.LoadingOverlay("show", {
+                image       : "",
+                text        : "Generating Notes.."
+            });
+        });
+
+        socket.on('transcription_update', (data) => {
+            transcription.textContent += data.text + ' ';
+        });
+
+        
+        socket.on('transcription_error', (data) => {
+           clinicalNotes.textContent = 'Error: No Conversation Detected';
+           $.LoadingOverlay("hide");
+        });
+        socket.on('transcription_complete', (data) => {
+            $.LoadingOverlay("hide");
+            if (data.error) {
+                clinicalNotes.textContent = 'Error: ' + data.error;
+            } else {
+                clinicalNotes.textContent = JSON.stringify(data, null, 2);
+                fetch('{{ url_for("notes.display_result") }}', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                })
+                .then(response => response.json())
+                .then(result => {
+                    if (result.success) {
+                        window.location.href = '{{ url_for("notes.display_result") }}';
+                    } else {
+                        clinicalNotes.textContent = 'Error: ' + (result.error || 'Failed to display notes');
+                    }
+                })
+                .catch(error => {
+                    clinicalNotes.textContent = 'Error: ' + error;
+                });
+            }
+        });
+    </script>
+{% endblock %}
+</body>
+</html>

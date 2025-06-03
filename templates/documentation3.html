@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automated Clinical Documentation Documentation</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        h1 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        h2 {
+            font-size: 1.8em;
+            margin-top: 20px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
+        }
+        p {
+            margin: 10px 0;
+        }
+        ul {
+            list-style-type: disc;
+            margin: 10px 0 10px 20px;
+        }
+        ul li {
+            margin-bottom: 8px;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        .highlight {
+            background-color: #e8f4f8;
+            padding: 10px;
+            border-left: 4px solid #3498db;
+            border-radius: 4px;
+        }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 0.9em;
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href = "{{ url_for('notes.notes') }}"><h1>Automated Clinical Documentation Documentation</h1></a>
+        <div class="section">
+            <h2>Overview</h2>
+            <p>The Automated Clinical Documentation app uses voice recognition and NLP to generate structured clinical notes from doctor-patient conversations. It streamlines documentation, reducing administrative burden for healthcare providers.</p>
+        </div>
+        <div class="section">
+            <h2>Problem Statement</h2>
+            <p>Use voice recognition and NLP to generate accurate clinical notes automatically, improving efficiency in healthcare documentation.</p>
+        </div>
+        <div class="section">
+            <h2>Tech Stack</h2>
+            <ul>
+                <li><strong>Backend:</strong> Python, Flask, Flask-SocketIO</li>
+                <li><strong>Speech Recognition:</strong> Vosk for offline speech-to-text, WebRTC VAD for voice activity detection</li>
+                <li><strong>NLP:</strong> Google Gemini AI (gemini-2.0-flash) for generating structured notes</li>
+                <li><strong>Audio Processing:</strong> PyAudio, NumPy</li>
+                <li><strong>Frontend:</strong> HTML, CSS, JavaScript, Jinja2 templates</li>
+                <li><strong>Libraries:</strong> google-generativeai, re for text processing, JSON for structured output</li>
+            </ul>
+        </div>
+        <div class="section">
+            <h2>Feasibility</h2>
+            <div class="highlight">
+                <ul>
+                    <li><strong>Efficiency:</strong> Real-time transcription and AI-generated notes significantly reduce documentation time.</li>
+                    <li><strong>Accuracy:</strong> Vosk’s offline speech recognition and Gemini’s NLP ensure reliable transcription and structured output.</li>
+                    <li><strong>Offline Capability:</strong> Vosk allows functionality without internet dependency, ideal for low-connectivity environments.</li>
+                    <li><strong>Integration:</strong> Flask-SocketIO enables seamless real-time updates, suitable for clinical settings.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="section">
+            <h2>Implementation Details</h2>
+            <p>The app uses PyAudio to capture audio, Vosk for real-time transcription, and WebRTC VAD to detect speech. Transcripts are processed by Gemini AI to generate JSON-structured clinical notes, including patient info, chief complaint, diagnosis, and medications. Results are displayed via Jinja2 templates, with SocketIO handling real-time updates.</p>
+        </div>
+        <div class="section">
+            <h2>Future Enhancements</h2>
+            <ul>
+                <li>Support multiple languages with additional Vosk models.</li>
+                <li>Implement noise cancellation for improved transcription accuracy.</li>
+                <li>Add secure cloud storage for clinical notes with encryption.</li>
+                <li>Integrate with electronic health record (EHR) systems.</li>
+            </ul>
+        </div>
+        <footer>
+            <p>Developed as part of the Healthcare Prototype for Automated Clinical Documentation</p>
+        </footer>
+    </div>
+</body>
+</html>

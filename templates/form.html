@@ -1,0 +1,58 @@
+        {% extends "base.html" %}
+        {% block content %}
+        <div class="form-container">
+            <div class="form-header">
+                <h1>Patient Readmission Risk Assessment</h1>
+                <p>Fill out the form below to Find Readmission Probability</p>
+            </div>
+            
+            <form id="appointmentForm" action="{{ url_for('risk.predict') }}" method="POST">
+                <div class="form-group">
+                    <label for="fullName">Age Range:</label>
+                    <select id="age" name="age" required>
+                        {% for bracket in age_brackets %}
+                            <option value="{{ bracket }}">{{ bracket }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Days in Hospital</label>
+                    <input type="number" id="time_in_hospital" name="time_in_hospital" min="1" max="14" required placeholder="Number of days Patient is previously Admitted">
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">number of Times patient Hospital visits in the year before the hospital stay</label>
+                    <input type="number" id="total_visits" name="total_visits" min="0" required>
+                </div>
+                
+                
+                <div class="form-group">
+                    <label for="service">Primary Diagnosis</label>
+                    <select id="diag_1" name="primary_diag" required>
+                        <option value="">Select Diagnosis</option>
+                        {% for diag in diagnoses %}
+                            <option value="{{ diag }}">{{ diag }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Number of Medications</label>
+                    <input type="number" id="n_medications" name="n_medications" min="0" required placeholder="number of medications administered during the hospital stay">
+                </div>
+
+
+                <div class="form-group">
+                    <label for="n_emergency">ER Visits (during hospital stay) :</label>
+                    <input type="number" id="n_emergency" name="n_emergency" min="0" required placeholder="number of visits to the emergency room in the year before the hospital stay">
+                </div>
+                
+                <button type="submit" id="submitBtn">Calculate Readmission Probability</button>
+            </form>
+
+        </div>
+        {% endblock %}
+<!-- partial -->
+
+

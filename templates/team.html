@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aarogya - Developers</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/6c9e60223b.js" crossorigin="anonymous"></script>
+    <link rel="icon" href="https://png.pngtree.com/png-vector/20230531/ourmid/pngtree-young-doctor-drawing-coloring-pages-for-kids-vector-png-image_6785610.png" type="image/gif">
+    <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif']
+          },
+          colors: {
+            primary: '#2563EB',
+            secondary: '#6B7280',
+            success: '#10B981',
+            info: '#9af2dd'
+          },
+          animation: {
+            fadeIn: 'fadeIn 1.5s ease-out',
+            backgroundPulse: 'backgroundPulse 12s infinite ease-in-out'
+          },
+          keyframes: {
+            fadeIn: {
+              '0%': { opacity: '0', transform: 'translateY(10px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' }
+            },
+            backgroundPulse: {
+              '0%, 100%': { backgroundPosition: '0% 50%' },
+              '50%': { backgroundPosition: '100% 50%' }
+            }
+          }
+        }
+      }
+    }
+    </script>
+    <style>
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: linear-gradient(135deg, #dbeafe, rgb(154, 242, 221), #ccfbf1);
+      background-size: 400% 400%;
+      animation: backgroundPulse 20s ease infinite;
+      z-index: -1;
+    }
+    .btn {
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    footer {
+      width: 100%;
+    }
+    a {
+      text-decoration: none;
+    }
+    .team-card {
+      background: linear-gradient(145deg, #ffffff, #e0f2fe);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .team-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    }
+    .avatar {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border: 3px solid #2563EB;
+    }
+    </style>
+</head>
+<body class="font-sans">
+    <nav class="bg-white shadow animate-fadeIn relative z-10">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="/"><h1 class="text-2xl font-bold text-primary">Aarogya</h1></a>
+            <a href="/team" class="text-lg font-semibold text-primary">Team Debuggers</a>
+        </div>
+    </nav>
+    <div class="container max-w-7xl mx-auto my-12 p-8 bg-white rounded-2xl shadow-xl animate-fadeIn">
+        <h1 class="text-4xl font-bold text-gray-900 text-center mb-10">Meet Our Team</h1>
+        <div class="flex flex-wrap gap-8 justify-center">
+            <div class="team-card w-64 rounded-xl p-6 shadow-lg">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png" alt="Shreyash Chaturvedi" class="avatar rounded-full mx-auto mb-4">
+                <h3 class="text-xl font-bold text-gray-900 text-center mb-2">Shreyash Chaturvedi</h3>
+                <p class="text-sm font-semibold text-primary text-center mb-3">Team Leader</p>
+                <div class="space-y-2 text-sm text-gray-700">
+                    <p class="flex items-center"><i class="fas fa-envelope mr-2 text-primary"></i> shreyash70019@gmail.com</p>
+                    <p class="flex items-center"><i class="fas fa-phone mr-2 text-primary"></i> +91 7017991517</p>
+                    <p class="flex items-center"><i class="fas fa-university mr-2 text-primary"></i> Amity University Madhya Pradesh</p>
+                </div>
+            </div>
+            <div class="team-card w-64 rounded-xl p-6 shadow-lg">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png" alt="Jatin Sankhyan" class="avatar rounded-full mx-auto mb-4">
+                <h3 class="text-xl font-bold text-gray-900 text-center mb-2">Jatin Sankhyan</h3>
+                <p class="text-sm font-semibold text-primary text-center mb-3">Team Member</p>
+                <div class="space-y-2 text-sm text-gray-700">
+                    <p class="flex items-center"><i class="fas fa-envelope mr-2 text-primary"></i> jatinsankhyan73@gmail.com</p>
+                    <p class="flex items-center"><i class="fas fa-phone mr-2 text-primary"></i> +91 7807922402</p>
+                    <p class="flex items-center"><i class="fas fa-university mr-2 text-primary"></i> Amity University Madhya Pradesh</p>
+                </div>
+            </div>
+            <div class="team-card w-64 rounded-xl p-6 shadow-lg">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png" alt="Prakhar Dwivedi" class="avatar rounded-full mx-auto mb-4">
+                <h3 class="text-xl font-bold text-gray-900 text-center mb-2">Prakhar Dwivedi</h3>
+                <p class="text-sm font-semibold text-primary text-center mb-3">Team Member</p>
+                <div class="space-y-2 text-sm text-gray-700">
+                    <p class="flex items-center"><i class="fas fa-envelope mr-2 text-primary"></i> prakhardwivedi881@gmail.com</p>
+                    <p class="flex items-center"><i class="fas fa-phone mr-2 text-primary"></i> +91 9336095938</p>
+                    <p class="flex items-center"><i class="fas fa-university mr-2 text-primary"></i> Amity University Madhya Pradesh</p>
+                </div>
+            </div>
+            <div class="team-card w-64 rounded-xl p-6 shadow-lg">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png" alt="Sourabh Dewangan" class="avatar rounded-full mx-auto mb-4">
+                <h3 class="text-xl font-bold text-gray-900 text-center mb-2">Sourabh Dewangan</h3>
+                <p class="text-sm font-semibold text-primary text-center mb-3">Team Member</p>
+                <div class="space-y-2 text-sm text-gray-700">
+                    <p class="flex items-center"><i class="fas fa-envelope mr-2 text-primary"></i> 0703sourabh@gmail.com</p>
+                    <p class="flex items-center"><i class="fas fa-phone mr-2 text-primary"></i> +91 8319444650</p>
+                    <p class="flex items-center"><i class="fas fa-university mr-2 text-primary"></i> Amity University Madhya Pradesh</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="bg-white border-t mt-12 animate-fadeIn">
+        <div class="max-w-7xl mx-auto px-4 py-6 text-center text-sm text-secondary">
+            Made with ❤️ - Debuggers<br>
+            <p>Developed as part of the Healthcare Prototype for Cyfuture Hackathon</p>
+        </div>
+    </footer>
+</body>
+</html>

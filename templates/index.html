@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aarogya - Smart Health Assistant</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://kit.fontawesome.com/6c9e60223b.js" crossorigin="anonymous"></script>
+  <link rel="icon" href="https://png.pngtree.com/png-vector/20230531/ourmid/pngtree-young-doctor-drawing-coloring-pages-for-kids-vector-png-image_6785610.png" type="image/gif">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif']
+          },
+          colors: {
+            primary: '#2563EB',
+            secondary: '#6B7280',
+            success: '#10B981',
+            info: '#9af2dd'
+          },
+          animation: {
+            fadeIn: 'fadeIn 1.5s ease-out',
+            backgroundPulse: 'backgroundPulse 12s infinite ease-in-out'
+          },
+          keyframes: {
+            fadeIn: {
+              '0%': { opacity: '0', transform: 'translateY(10px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' }
+            },
+            backgroundPulse: {
+              '0%, 100%': { backgroundPosition: '0% 50%' },
+              '50%': { backgroundPosition: '100% 50%' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: linear-gradient(135deg, #dbeafe, rgb(154, 242, 221), #ccfbf1);
+      background-size: 400% 400%;
+      animation: backgroundPulse 20s ease infinite;
+      z-index: -1;
+    }
+    .btn {
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    footer{
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+    }
+    a{
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body class="font-sans">
+  <nav class="bg-white shadow animate-fadeIn relative z-10">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+      <a href = "/"><h1 class="text-2xl font-bold text-primary">Aarogya</h1></a>
+      <a href="/team" class="text-lg font-semibold text-primary">Team Debuggers</a>
+    </div>
+  </nav>
+
+  <header class="text-center py-16 animate-fadeIn">
+    <h2 class="text-4xl md:text-5xl font-bold mb-4 text-primary"> <i class="fa-solid fa-user-doctor fa-beat-fade fa-xl" style="color: #74C0FC;"></i> Aarogya - Your AI-Powered Healthcare Portal</h2>
+    <p class="text-secondary text-lg max-w-2xl mx-auto">Analyze symptoms, predict health risks, and auto-generate clinical notes — all in one place.</p>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 py-12 grid grid-cols-1 md:grid-cols-3 gap-8 animate-fadeIn">
+    <div class="bg-white rounded-2xl shadow-lg p-6 hover:scale-105 transition-transform duration-300">
+      <h3 class="text-2xl font-semibold mb-2 text-primary">AI Symptom Checker</h3>
+      <p class="text-secondary mb-4">Describe your symptoms, and our AI will guide you to the right care path.</p>
+      <a href="/symptomchecker" class="inline-block bg-primary text-white px-5 py-2.5 rounded-xl btn">Analyze Symptoms</a>
+
+      <a href="/documentation1" class="inline-block bg-info text-white px-5 py-2.5 rounded-xl btn">Documentation</a>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow-lg p-6 hover:scale-105 transition-transform duration-300">
+      <h3 class="text-2xl font-semibold mb-2 text-success">Predictive Patient Risk</h3>
+      <p class="text-secondary mb-4">Input patient data to predict risk of readmission or complications.</p>
+      <a href="{{ url_for('risk.risk_form') }}" class="inline-block bg-success text-white px-5 py-2.5 rounded-xl btn">Predict Risk</a>
+
+      <a href="/documentation2" class="inline-block bg-info text-white px-5 py-2.5 rounded-xl btn">Documentation</a>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow-lg p-6 hover:scale-105 transition-transform duration-300">
+      <h3 class="text-2xl font-semibold mb-2 text-secondary">Automated Clinical Notes</h3>
+      <p class="text-secondary mb-4">Use voice or conversation input to generate accurate medical documentation.</p>
+      <a href="{{ url_for('notes.notes') }}" class="inline-block bg-secondary text-white px-5 py-2.5 rounded-xl btn">Generate Notes</a>
+
+      <a href="/documentation3" class="inline-block bg-info text-white px-5 py-2.5 rounded-xl btn">Documentation</a>
+    </div>
+  </main>
+
+  <footer class="bg-white border-t mt-12 animate-fadeIn">
+    <div class="max-w-7xl mx-auto px-4 py-6 text-center text-sm text-secondary">
+      Made with ❤️ - Debuggers<br>
+      <p>Developed as part of the Healthcare Prototype for Cyfuture Hackathon</p>
+        
+
+    </div>
+  </footer>  
+</body>
+</html>

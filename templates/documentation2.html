@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predictive Patient Risk Models Documentation</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        h1 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        h2 {
+            font-size: 1.8em;
+            margin-top: 20px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
+        }
+        p {
+            margin: 10px 0;
+        }
+        ul {
+            list-style-type: disc;
+            margin: 10px 0 10px 20px;
+        }
+        ul li {
+            margin-bottom: 8px;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        .highlight {
+            background-color: #e8f4f8;
+            padding: 10px;
+            border-left: 4px solid #3498db;
+            border-radius: 4px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #3498db;
+            color: #fff;
+        }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 0.9em;
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href = "{{ url_for('risk.risk_form') }}"><h1>Predictive Patient Risk Models Documentation</h1></a>
+        <div class="section">
+            <h2>Overview</h2>
+            <p>The Predictive Patient Risk Models app forecasts hospital readmission risks using a machine learning model trained on a Kaggle dataset. It calculates risk scores and identifies contributing factors, aiding healthcare providers in patient management.</p>
+        </div>
+        <div class="section">
+            <h2>Problem Statement</h2>
+            <p>Develop tools to forecast hospital readmissions and calculate patient risk scores to support proactive healthcare interventions.</p>
+        </div>
+        <div class="section">
+            <h2>Tech Stack</h2>
+            <ul>
+                <li><strong>Backend:</strong> Python, Flask</li>
+                <li><strong>Machine Learning:</strong> Scikit-learn (RandomForestClassifier), SMOTE for handling imbalanced data</li>
+                <li><strong>Data Processing:</strong> Pandas, NumPy</li>
+                <li><strong>Visualization:</strong> Plotly Express for risk and feature importance charts</li>
+                <li><strong>Frontend:</strong> HTML, CSS, JavaScript, Jinja2 templates</li>
+                <li><strong>Dataset:</strong> Kaggle Hospital Readmissions (<a href="https://www.kaggle.com/datasets/dubradave/hospital-readmissions/data">link</a>)</li>
+            </ul>
+        </div>
+        <div class="section">
+            <h2>Dataset Details</h2>
+            <p>The model was trained on the Kaggle Hospital Readmissions dataset, containing 25,000 patient records with the following features:</p>
+            <ul>
+                <li><strong>age:</strong> Age bracket of the patient</li>
+                <li><strong>time_in_hospital:</strong> Days (1-14)</li>
+                <li><strong>n_procedures:</strong> Number of procedures performed</li>
+                <li><strong>n_lab_procedures:</strong> Number of lab procedures</li>
+                <li><strong>n_medications:</strong> Number of medications administered</li>
+                <li><strong>n_outpatient:</strong> Outpatient visits in the prior year</li>
+                <li><strong>n_inpatient:</strong> Inpatient visits in the prior year</li>
+                <li><strong>n_emergency:</strong> Emergency room visits in the prior year</li>
+                <li><strong>medical_specialty:</strong> Specialty of the admitting physician</li>
+                <li><strong>diag_1, diag_2, diag_3:</strong> Primary and secondary diagnoses</li>
+                <li><strong>glucose_test, A1Ctest:</strong> Test results (high, normal, not performed)</li>
+                <li><strong>change, diabetes_med:</strong> Diabetes medication changes and prescriptions</li>
+                <li><strong>readmitted:</strong> Target variable ('yes' or 'no')</li>
+            </ul>
+        </div>
+        <div class="section">
+            <h2>Model Performance</h2>
+            <p>The RandomForestClassifier model, trained with SMOTE to address class imbalance, achieved the following metrics:</p>
+            <table>
+                <tr><th>Metric</th><th>Value</th></tr>
+                <tr><td>Accuracy</td><td>0.616</td></tr>
+                <tr><td>AUC-ROC</td><td>0.64</td></tr>
+                <tr><td>Precision (Class 0)</td><td>0.62</td></tr>
+                <tr><td>Recall (Class 0)</td><td>0.69</td></tr>
+                <tr><td>F1-Score (Class 0)</td><td>0.65</td></tr>
+                <tr><td>Precision (Class 1)</td><td>0.62</td></tr>
+                <tr><td>Recall (Class 1)</td><td>0.53</td></tr>
+                <tr><td>F1-Score (Class 1)</td><td>0.57</td></tr>
+            </table>
+            <p><strong>Confusion Matrix:</strong> [[1682, 748], [1052, 1205]]</p>
+        </div>
+        <div class="section">
+            <h2>Feasibility</h2>
+            <div class="highlight">
+                <ul>
+                    <li><strong>Predictive Power:</strong> The model provides actionable risk scores and feature importance, aiding clinical decision-making.</li>
+                    <li><strong>Interpretability:</strong> Visualizations (risk and importance charts) make results accessible to non-technical users.</li>
+                    <li><strong>Integration:</strong> Flask-based deployment allows easy integration into hospital systems.</li>
+                    <li><strong>Data Utilization:</strong> Leverages comprehensive Kaggle dataset, covering diverse patient features.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="section">
+            <h2>Implementation Details</h2>
+            <p>The app uses a web form to collect patient data (age, diagnosis, hospital stay, etc.). The RandomForest model predicts readmission probability, converted to a risk score (0-100). Plotly generates bar charts for risk scores and feature importance. Results are displayed via Jinja2 templates.</p>
+        </div>
+        <div class="section">
+            <h2>Future Enhancements</h2>
+            <ul>
+                <li>Improve model accuracy using advanced algorithms (e.g., XGBoost) or deep learning.</li>
+                <li>Incorporate real-time hospital data for dynamic predictions.</li>
+                <li>Add patient history tracking for longitudinal risk assessment.</li>
+                <li>Optimize feature engineering with automated methods.</li>
+            </ul>
+        </div>
+        <footer>
+            <p>Developed as part of the Healthcare Prototype for Predictive Patient Risk Models</p>
+        </footer>
+    </div>
+</body>
+</html>
