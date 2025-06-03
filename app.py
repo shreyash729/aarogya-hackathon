@@ -1,11 +1,10 @@
-import eventlet
-eventlet.monkey_patch()
-from flask import Flask, Blueprint, render_template, request, session, jsonify, make_response
+#import eventlet
+#eventlet.monkey_patch()
+from flask import Flask, Blueprint, render_template, request
 from flask_socketio import SocketIO
 import os
 import json
 #import pyaudio
-import numpy
 from datetime import datetime
 import pickle
 import pandas as pd
@@ -13,15 +12,13 @@ import plotly.express as px
 import plotly.io as pio
 #import vosk
 #import webrtcvad
-import pdfkit
 import google.generativeai as genai
-import re
 
 
 # ------------------------- Configuration -------------------------
 app = Flask(__name__, static_folder='static')
 app.config['SECRET_KEY'] = 'secret!'
-socketio = SocketIO(app, async_mode='eventlet', cors_allowed_origins="*", use_reloader=False)
+#socketio = SocketIO(app, async_mode='eventlet', cors_allowed_origins="*", use_reloader=False)
 
 # Load predictive model
 with open('model/readmission_model.pkl', 'rb') as f:
@@ -308,4 +305,4 @@ app.register_blueprint(symptom_bp)
 
 if __name__ == '__main__':
     print("🚀 Starting Flask server...")
-    socketio.run(app, debug=False, host='0.0.0.0', port=5000)
+    app.run(debug=False, host='0.0.0.0', port=5000)
